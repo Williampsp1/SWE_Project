@@ -15,6 +15,7 @@
         android:layout_marginEnd="162dp"
         android:layout_marginRight="162dp"
         android:layout_marginBottom="8dp"
+        android:onClick="Create"
         android:text="Create"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -94,7 +95,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView15" />
 
     <EditText
-        android:id="@+id/editText8"
+        android:id="@+id/editUsername"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
@@ -106,7 +107,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText9"
+        android:id="@+id/editPassword"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
@@ -115,10 +116,10 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/editText8" />
+        app:layout_constraintTop_toBottomOf="@+id/editUsername" />
 
     <EditText
-        android:id="@+id/editText10"
+        android:id="@+id/editFirst"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
@@ -127,10 +128,10 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/textView13"
-        app:layout_constraintTop_toBottomOf="@+id/editText9" />
+        app:layout_constraintTop_toBottomOf="@+id/editPassword" />
 
     <EditText
-        android:id="@+id/editText11"
+        android:id="@+id/editLast"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
@@ -139,31 +140,33 @@
         android:ems="10"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/textView14"
-        app:layout_constraintTop_toBottomOf="@+id/editText10" />
+        app:layout_constraintTop_toBottomOf="@+id/editFirst" />
 
     <EditText
-        android:id="@+id/editText12"
+        android:id="@+id/editBirthdate"
         android:layout_width="180dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
         android:layout_marginLeft="9dp"
         android:layout_marginTop="9dp"
         android:ems="10"
+        android:hint="dd/mm/yy"
         android:inputType="date"
         app:layout_constraintStart_toEndOf="@+id/textView14"
-        app:layout_constraintTop_toBottomOf="@+id/editText11" />
+        app:layout_constraintTop_toBottomOf="@+id/editLast" />
 
     <EditText
-        android:id="@+id/editText13"
+        android:id="@+id/editSex"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="9dp"
         android:layout_marginLeft="9dp"
         android:layout_marginTop="9dp"
         android:ems="10"
+        android:hint="Male or Female"
         android:inputType="textPersonName"
         app:layout_constraintStart_toEndOf="@+id/textView16"
-        app:layout_constraintTop_toBottomOf="@+id/editText12" />
+        app:layout_constraintTop_toBottomOf="@+id/editBirthdate" />
 
     <TextView
         android:id="@+id/textView19"
