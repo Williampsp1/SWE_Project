@@ -1,6 +1,7 @@
 package android.sweproject.fyndhr;
 
 import android.content.Intent;
+
 import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -15,16 +16,19 @@ import android.widget.Toast;
 
 public class CreateAccount extends AppCompatActivity {
 
+
     DatabaseHelper myDb;
     EditText inUser, inPass, inFirst, inLast, inSex, inBirth;
     Button createAcc;
     Button viewData;
 
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_screen);
+
         myDb = new DatabaseHelper(this);
 
         inUser = (EditText) findViewById(R.id.editUsername);
@@ -47,8 +51,10 @@ public class CreateAccount extends AppCompatActivity {
      * @param view
      */
 
+
     public void Create(View view){
         boolean validateOk = validate(new EditText[] {inUser, inPass, inFirst, inLast, inSex, inBirth});
+
 
         if (validateOk) {
             Intent intent = new Intent(this, MainActivity.class);
@@ -73,6 +79,7 @@ public class CreateAccount extends AppCompatActivity {
         }
         return true;
     }
+
 
     public void viewAll(){
         viewData.setOnClickListener(new View.OnClickListener() {
