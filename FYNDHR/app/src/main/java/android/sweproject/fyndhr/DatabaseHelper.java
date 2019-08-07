@@ -6,6 +6,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.widget.TextView;
+import android.view.View;
+
+import org.w3c.dom.Text;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.util.StringTokenizer;
@@ -31,11 +36,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         super(context, TABLE_NAME, null, 1);
         //SQLiteDatabase db = this.getWritableDatabase();
         //onUpgrade(db, 1, 1);
+
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String createTable = "CREATE TABLE " + TABLE_NAME + " (username varchar(12) PRIMARY KEY, pass varchar(15), first_name varchar(12), last_name varchar(15), sex varchar(1), birth_date date, nreviews int DEFAULT 0, fun real DEFAULT 0, safe real DEFAULT 0, reliable real DEFAULT 0)";
+        String createTable = "CREATE TABLE " + TABLE_NAME + " (username varchar(20) PRIMARY KEY, pass varchar(15), first_name varchar(12), last_name varchar(15), sex varchar(1), birth_date date, nreviews int DEFAULT 0, fun double DEFAULT 0, safe double DEFAULT 0, reliable double DEFAULT 0)";
         db.execSQL(createTable);
     }
 
@@ -168,7 +174,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else {
             StringBuffer buffer = new StringBuffer();
             while (res.moveToNext()) {
-                buffer.append(res.getInt(indexin));
+                buffer.append(res.getDouble(indexin));
 
             }
             return Double.parseDouble(buffer.toString());
@@ -187,6 +193,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL7, newReviews);
         db.update(TABLE_NAME, contentValues, "username = ?", new String[]{usr});
+        db.close();
     }
 
     /* Inserts fun/safe/reliable into table with new averages.
@@ -194,7 +201,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
      * */
     public void insertRating(double fun, double safe, double reliable, String usr) {
 
-        double reviews = getReviews(usr);
+        int reviews = getReviews(usr);
 
         // No reviews / new account ->
         // Add review and rating
@@ -206,33 +213,37 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             contentValues.put(COL9, safe);
             contentValues.put(COL10, reliable);
             db.update(TABLE_NAME, contentValues, "username = ?", new String[]{usr});
+            db.close();
         }
-
         // One or more reviews ->
         // Compute average FUN and store it in the table
+        else {
+            addReview(usr);
+            reviews = getReviews(usr);
+            double averageFun = getRating(usr, 7);
+            double totalFun = averageFun * (reviews - 1);
+            double newAverageFun = (totalFun + fun) / (reviews);
 
-        addReview(usr);
-        double averageFun = getRating(usr, 7);
-        double totalFun = averageFun * (reviews - 1);
-        double newAverageFun = (totalFun + fun) / (reviews);
+            // Compute average SAFE and store it in the table
+            double averageSafe = getRating(usr, 8);
+            double totalSafe = averageSafe * (reviews - 1);
+            double newAverageSafe = (totalSafe + safe) / (reviews);
 
-        // Compute average SAFE and store it in the table
-        double averageSafe = getRating(usr, 8);
-        double totalSafe = averageSafe * (reviews - 1);
-        double newAverageSafe = (totalSafe + safe) / (reviews);
+            // Compute average RELIABLE and store it in the table
+            double averageReliable = getRating(usr, 9);
+            double totalReliable = averageReliable * (reviews - 1);
+            double newAverageReliable = (totalReliable + reliable) / (reviews);
 
-        // Compute average RELIABLE and store it in the table
-        double averageReliable = getRating(usr, 9);
-        double totalReliable = averageReliable * (reviews - 1);
-        double newAverageReliable = (totalReliable + reliable) / (reviews);
+            // Write to DB
+            SQLiteDatabase db = this.getWritableDatabase();
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(COL8, newAverageFun);
+            contentValues.put(COL9, newAverageSafe);
+            contentValues.put(COL10, newAverageReliable);
+            db.update(TABLE_NAME, contentValues, "username = ?", new String[]{usr});
+            db.close();
 
-        // Write to DB
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COL8, newAverageFun);
-        contentValues.put(COL9, newAverageSafe);
-        contentValues.put(COL10, newAverageReliable);
-        db.update(TABLE_NAME, contentValues, "username = ?", new String[]{usr});
+        }
     }
 }
 
