@@ -50,7 +50,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+    /* Takes in a username and password and checks to see if an account exists.
+     * Returns true if correct account information , false if wrong information
+     * */
+    public boolean LoginCheck(String usrin, String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        Cursor res = db.rawQuery("select * from " + TABLE_NAME + " where " + COL1 + "= '" + usrin + "' AND " + COL2 + "= '" + password + "';", null);
 
+        // No account found
+        if (res.getCount() == 0) {
+            return false;
+        }
+        // Account found
+        else {
+            return true;
+        }
+    }
     /* Inserts account information into the table.
      *
      * */
@@ -78,6 +93,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor res = db.rawQuery("select * from " + TABLE_NAME, null);
         return res;
     }
+
 
     /* Returns the password for a specified account, null if error
      *
