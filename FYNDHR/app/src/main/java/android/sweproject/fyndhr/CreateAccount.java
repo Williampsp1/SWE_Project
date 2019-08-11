@@ -4,11 +4,8 @@ import android.content.Intent;
 
 import android.database.Cursor;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -57,7 +54,7 @@ public class CreateAccount extends AppCompatActivity {
 
 
         if (validateOk) {
-            Intent intent = new Intent(this, MainActivity.class);
+            Intent intent = new Intent(this, Homepage.class);
             intent.putExtra("Disable", 1);
             startActivity(intent);
         }
@@ -96,7 +93,7 @@ public class CreateAccount extends AppCompatActivity {
                         buffer.append("Username :"+ res.getString(0)+"\n");
                         buffer.append("Password :"+ res.getString(1)+"\n");
                         buffer.append("First :"+ res.getString(2)+"\n");
-                        buffer.append("LAst :"+ res.getString(3)+"\n");
+                        buffer.append("Last :"+ res.getString(3)+"\n");
                         buffer.append("Sex :"+ res.getString(4)+"\n");
                         buffer.append("BirthDate :"+ res.getString(5)+"\n\n");
                     }

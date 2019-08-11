@@ -5,16 +5,28 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Button;
+import android.widget.RatingBar;
 import android.widget.Toast;
 
 public class ReviewUser extends AppCompatActivity {
 
-
+    DatabaseHelper myDb;
+    Button submit;
+    RatingBar comfortable, fun, reliable;
+    TextView user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.review_user);
-
+        
+        myDb = new DatabaseHelper(this);
+        fun = findViewById(R.id.ratingBar6);
+        reliable = findViewById(R.id.ratingBar3);
+        comfortable = findViewById(R.id.ratingBar4);
+        submit = findViewById(R.id.button2);
+        user = findViewById(R.id.textView2);
+      //  rate = findViewById(R.id.textView3);
 
     }
 
@@ -30,9 +42,11 @@ public class ReviewUser extends AppCompatActivity {
         mIntent.getExtras();
 
         String User = mIntent.getStringExtra("Username");
-
-
-    Intent sub = new Intent(this, ViewUser.class);
+        
+       // Line for inserting review into database
+        myDb.insertRating(fun.getRating(),comfortable.getRating(),reliable.getRating(),User);
+        
+        Intent sub = new Intent(this, ViewUser.class);
         String thanks = "Thank you for the Review";
         sub.putExtra("Review_Complete", thanks);
         sub.putExtra("Username", User);
