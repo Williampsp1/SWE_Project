@@ -14,7 +14,11 @@ public class ReviewUser extends AppCompatActivity {
     DatabaseHelper myDb;
     Button submit;
     RatingBar comfortable, fun, reliable;
+
     TextView user;
+=======
+    TextView user;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,7 +30,10 @@ public class ReviewUser extends AppCompatActivity {
         comfortable = findViewById(R.id.ratingBar4);
         submit = findViewById(R.id.button2);
         user = findViewById(R.id.textView2);
-      //  rate = findViewById(R.id.textView3);
+
+       // rate = findViewById(R.id.textView3);
+  
+       // rate = findViewById(R.id.textView3);
 
     }
 
@@ -43,7 +50,11 @@ public class ReviewUser extends AppCompatActivity {
 
         String User = mIntent.getStringExtra("Username");
         
+
        // Line for inserting review into database
+
+       // Line for inserting review into database
+
         myDb.insertRating(fun.getRating(),comfortable.getRating(),reliable.getRating(),User);
         
         Intent sub = new Intent(this, ViewUser.class);
